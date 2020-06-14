@@ -1,0 +1,15 @@
+DEFAULT_OPTS="--ansi --height=50%  --layout=reverse --border --inline-info"
+DEFAULT_COMMAND="fdfind --follow --hidden --color=always --exclude .git"
+
+export FZF_DEFAULT_COMMAND="$DEFAULT_COMMAND --type f"
+export FZF_DEFAULT_OPTS=$DEFAULT_OPTS
+
+
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+export FZF_CTRL_T_OPTS="$DEFAULT_OPTS --preview='batcat --style=numbers --color=always --line-range :500 {}'"
+
+export FZF_ALT_C_COMMAND="$DEFAULT_COMMAND --type d"
+export FZF_ALT_C_OPTS="$DEFAULT_OPTS --preview 'tree -C {} | head -200'"
+
+#export FZF_CTRL_R_OPTS=$DEFAULT_OPTS
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
