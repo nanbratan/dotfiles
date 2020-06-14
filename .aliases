@@ -1,0 +1,90 @@
+# Zsh
+
+alias reset_shell='source ~/.zshrc'
+
+# Apt
+
+alias sa='sudo apt'
+ 
+alias sai='sudo apt install'
+alias sau='sudo apt update'
+alias sar='sudo apt remove'
+
+# Bat
+
+alias bat='batcat --pager "less -Rf"'
+
+# Git
+
+alias g='git'
+
+alias gst='git status'
+alias gss='git status -s'
+
+alias ga='git add'
+
+alias gpl='git pull'
+alias gpush='git push'
+
+gdv() { git diff -w "$@" | view - }
+
+alias gc='git commit'
+alias gca='git commit -a'
+
+alias gco='git checkout'
+
+alias gb='git branch'
+alias gba='git branch -a'
+
+alias gcount='git shortlog -sn'
+
+alias gcp='git cherry-pick'
+
+unalias -m 'glg'
+unalias -m 'glgg'
+glg() { git log --stat | bat } 
+glgg() { git log --graph | bat }
+
+
+alias gm='git merge'
+alias gr='git reset'
+alias grh='git reset --hard'
+
+# as-tree
+
+alias as-tree='/home/igor/.cargo/bin/as-tree'
+
+# fd-find
+
+alias fd='fdfind --hidden --follow --color=always --exclude .git'
+fdf() { fd --type f . }
+fdd() { fd --type d . }
+fdt() { fd '$*' | as-tree }
+
+# fzf
+
+#--height 40% --layout=reverse --border'
+#--inline-info
+
+fzf_preview_opt='batcat --style=numbers --color=always --line-range :500 {}'
+fzft() { as-tree | fzf }
+fzfp() { fdf $1 | fzf --preview=$fzf_preview_opt }
+fzfft() { 
+ fdf $1 | fzft
+}
+fzfdt() { fdd $1 | fzft }
+
+fzf_vim() {
+  local file=$(fzfp)
+  if [ -n "$file" ]; then
+     true | xargs -o vim "$file"
+  fi
+}
+
+# Custom soft
+
+track_time() {
+  echo $1 
+  python3 ~/scripts/tracking/make.py $1
+}
+
